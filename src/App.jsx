@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./styles.css";
 import heroImage from "../assets/Hero-image.png";
 import logoImage from "../assets/logo.png";
@@ -16,6 +17,21 @@ const navLinks = [
 ];
 
 export default function App() {
+  const [modal, setModal] = useState({ open: false, title: "", body: "" });
+
+  const openModal = (title, body) => setModal({ open: true, title, body });
+  const closeModal = () => setModal({ open: false, title: "", body: "" });
+
+  const aboutBody = [
+    "Sushi Moon has been delighting customers on Moon Street in Wan Chai since 2014. Renowned for its high-quality ingredients and meticulous preparation, it was named one of \"Asia Miles' Favorite Hong Kong Restaurants\" in 2019. In March 2025, Sushi Moon opened a new location next to the World Trade Centre in Causeway Bay.",
+    "We are committed to using fresh ingredients flown in daily from Japan, combining traditional Edo-style sushi techniques to create authentic Japanese cuisine. Each piece of sushi showcases the chef's creativity and expertise, highlighting fresh ingredients, precise handling, and optimal temperature. The rice is prepared with premium red vinegar imported from Japan, blended according to a secret recipe that offers a truly unique experience.",
+  ];
+
+  const chefBody = [
+    "Our esteemed chef Mr. Man brings years of expertise in traditional Edo-style sushi, embodying the art of authentic Japanese cuisine. With a deep passion for selecting the finest ingredients and perfecting every element, our chef meticulously crafts each piece of sushi to highlight its freshness, balance, and flavor.",
+    "Trained in precise handling and temperature control, they skillfully combine premium red vinegar rice—made with a secret recipe—with the freshest seafood flown in daily from Japan, delivering an unforgettable dining experience that reflects both tradition and creativity.",
+  ];
+
   return (
     <div className="page">
       <header
@@ -116,7 +132,10 @@ export default function App() {
               vinegar imported from Japan, blended according to a secret recipe that
               offers a truly unique experience.
             </p>
-            <button className="button ghost about-cta">
+            <button
+              className="button ghost about-cta"
+              onClick={() => openModal("About Us", aboutBody)}
+            >
               Explore More
               <span aria-hidden="true" className="cta-arrow">
                 →
@@ -143,7 +162,10 @@ export default function App() {
               unforgettable dining experience that reflects both tradition and
               creativity.
             </p>
-            <button className="button ghost chef-cta">
+            <button
+              className="button ghost chef-cta"
+              onClick={() => openModal("Meet Our Chef", chefBody)}
+            >
               Explore More
               <span aria-hidden="true" className="cta-arrow">
                 →
@@ -239,6 +261,82 @@ export default function App() {
           </div>
         </div>
       </section>
+      <section className="footer" aria-label="Site footer">
+        <div className="footer-inner">
+          <div className="footer-logo">
+            <img src={logoImage} alt="Moon n More logo" />
+          </div>
+          <div className="footer-contact">
+            <div className="footer-phone">(852) 6100 9297</div>
+            <div className="footer-address">G/F, 279 Gloucester Rd, Causeway Bay</div>
+          </div>
+          <div className="footer-divider" aria-hidden="true" />
+          <div className="footer-nav">
+            {navLinks.map((link) => (
+              <a key={`footer-${link.label}`} href={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <div className="footer-bottom">
+            <div className="footer-copy">© 2026 Moon N More | All rights reserved.</div>
+            <div className="footer-social" aria-label="Social media">
+              <a href="https://www.facebook.com" aria-label="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M13.2 21v-7.2h2.4l.4-3H13.2V8.6c0-.9.3-1.5 1.5-1.5h1.4V4.3C15.7 4.2 14.6 4 13.3 4 10.7 4 8.9 5.6 8.9 8.3V10.8H6.5v3h2.4V21h4.3Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
+              <a href="https://www.instagram.com" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm8.75 1.25a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm-4.75 1.5A4.25 4.25 0 1 1 7.75 12 4.25 4.25 0 0 1 12 7.75Zm0 2a2.25 2.25 0 1 0 2.25 2.25A2.25 2.25 0 0 0 12 9.75Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
+              <a href="https://www.twitter.com" aria-label="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M19.7 7.8c.6-.4 1-.9 1.2-1.6a6.1 6.1 0 0 1-1.7.5 2.9 2.9 0 0 0-2.2-1c-1.6 0-2.9 1.3-2.9 3 0 .2 0 .5.1.7a8.2 8.2 0 0 1-6-3.1 2.9 2.9 0 0 0 .9 3.9c-.5 0-.9-.2-1.3-.4v.1c0 1.4 1 2.7 2.4 3-.2.1-.5.1-.8.1-.2 0-.4 0-.6-.1a3 3 0 0 0 2.7 2A5.8 5.8 0 0 1 5 16.4a8 8 0 0 0 4.4 1.3c5.3 0 8.2-4.4 8.2-8.2v-.4c.5-.4.9-.9 1.1-1.3Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      {modal.open && (
+        <div
+          className="modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={modal.title}
+          onClick={closeModal}
+        >
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>{modal.title}</h3>
+              <button className="modal-close" onClick={closeModal} aria-label="Close dialog">
+                ×
+              </button>
+            </div>
+            <div className="modal-body">
+              {Array.isArray(modal.body)
+                ? modal.body.map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
+                : <p>{modal.body}</p>}
+            </div>
+            <div className="modal-actions">
+              <button className="button primary" onClick={closeModal}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
